@@ -1,14 +1,8 @@
-import type { Riddle } from '../riddle/context.ts'
-import { phrase } from './config.ts'
+import type { Riddle } from './type.ts'
+import { client } from '../../shared/api/client.ts'
 
-export const getRiddle = (): Riddle => {
+export const getRiddle = async () => {
+  const response = await client.get('/game')
 
-  const words = phrase.replace(/[А-ЯЁ]/gi, '_').split(' ').map((word) => word.split(''))
-
-  return {
-    clue: phrase,
-    correct: [],
-    wrong: [],
-    words,
-  }
+  return response.data as Riddle
 }

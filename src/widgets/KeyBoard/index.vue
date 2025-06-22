@@ -4,14 +4,15 @@ import Key from './ui/Key.vue'
 import { getRiddleContext } from '../../entities/riddle/context.ts'
 import { guessChars } from '../../entities/api/guess-char.ts'
 
-const { correct, wrong, words } = getRiddleContext()
+const { correct, wrong, phrase, is_win } = getRiddleContext()
 
-const handleClick = (key: string) => {
-  const response = guessChars(key)
+const handleClick = async (key: string) => {
+  const response = await guessChars(key)
 
-  correct.value = correct.value.concat(response.correct)
-  wrong.value = wrong.value.concat(response.wrong)
-  words.value = response.words
+  correct.value = response?.correct
+  wrong.value = response?.wrong
+  phrase.value = response?.phrase
+  is_win.value = response?.is_win
 }
 
 </script>
@@ -24,6 +25,7 @@ const handleClick = (key: string) => {
         :char
         :isCorrect="correct.includes(char)"
         :isWrong="wrong.includes(char)"
+        :disabled="is_win"
     />
   </div>
 </template>

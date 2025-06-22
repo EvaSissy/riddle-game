@@ -3,6 +3,7 @@ defineProps<{
   char: string
   isCorrect: boolean
   isWrong: boolean
+  disabled?: boolean
 }>()
 </script>
 
@@ -10,7 +11,7 @@ defineProps<{
   <button
       class="keyboard-button"
       :class="{ correct: isCorrect, wrong: isWrong }"
-      :disabled="isWrong || isCorrect"
+      :disabled="isWrong || isCorrect || disabled"
   >
     {{ char }}
   </button>
